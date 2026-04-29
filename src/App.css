@@ -1,13 +1,15 @@
 /* App Layout and component styles */
 
 .app-container {
-  display: flex;
-  height: 100vh;
-  width: 100vw;
   overflow: hidden;
-  padding: 1.5rem;
-  gap: 1.5rem;
+  padding: 1rem;
+  gap: 1rem;
   background: transparent;
+}
+
+.app-fullscreen {
+  padding: 0;
+  gap: 0;
 }
 
 .sidebar {

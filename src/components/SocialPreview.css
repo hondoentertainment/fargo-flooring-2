@@ -14,8 +14,14 @@
 
 /* Scaling logic for the preview panel */
 .preview-panel .social-document {
-  transform: scale(0.5);
-  margin-bottom: -540px; /* Offset the scale height reduction manually for simple layout */
+  transform: scale(0.45);
+  margin-bottom: -600px; /* Offset the scale height reduction manually for simple layout */
+}
+
+.app-fullscreen .preview-panel .social-document {
+  transform: scale(0.75);
+  margin-bottom: -270px;
+  margin-top: 4rem;
 }
 
 .social-hero {

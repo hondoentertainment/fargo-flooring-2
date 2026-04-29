@@ -5,7 +5,9 @@ import {
   BookOpen, 
   Layout, 
   Download,
-  Printer
+  Printer,
+  Maximize2,
+  Minimize2
 } from 'lucide-react';
 import html2canvas from 'html2canvas';
 import FlyerPreview from './components/FlyerPreview';
@@ -15,6 +17,7 @@ import './App.css';
 
 function App() {
   const [assetType, setAssetType] = useState('flyer'); 
+  const [isFullscreen, setIsFullscreen] = useState(false);
   
   const [formData, setFormData] = useState({
     productName: 'Natural Oak Engineered Hardwood',
@@ -87,8 +90,9 @@ function App() {
   };
 
   return (
-    <div className="app-container">
+    <div className={`app-container ${isFullscreen ? 'app-fullscreen' : ''}`}>
       {/* Sidebar Navigation */}
+      {!isFullscreen && (
       <aside className="sidebar stagger-item" style={{ animationDelay: '0.05s' }}>
         <div className="brand-header">
           <Layout size={24} color="var(--accent-sapphire)" />
@@ -122,9 +126,11 @@ function App() {
           Full Brochure
         </button>
       </aside>
+      )}
 
       <main className="main-content">
         {/* Editor Form */}
+        {!isFullscreen && (
         <section className="editor-panel stagger-item" style={{ animationDelay: '0.1s' }}>
           <h3>Edit Details</h3>
           
@@ -230,11 +236,16 @@ function App() {
             />
           </div>
         </section>
+        )}
 
         {/* Live Preview */}
         <section className="preview-panel">
           {/* Action Bar for Exprots */}
           <div className="action-bar stagger-item" style={{ animationDelay: '0.25s' }}>
+            <button className="btn btn-outline" onClick={() => setIsFullscreen(!isFullscreen)}>
+              {isFullscreen ? <Minimize2 size={18} /> : <Maximize2 size={18} />}
+              {isFullscreen ? 'Exit Full Screen' : 'Full Screen'}
+            </button>
             <button className="btn btn-outline" onClick={handlePrint} disabled={assetType === 'social'}>
               <Printer size={18} /> Print PDF
             </button>
