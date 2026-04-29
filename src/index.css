@@ -14,15 +14,17 @@
   --text-secondary: #8b949e;
   --text-muted: #484f58;
 
-  --border-color: rgba(240, 246, 252, 0.1);
-  --glass-bg: rgba(13, 17, 23, 0.7);
+  --border-color: rgba(148, 163, 184, 0.1);
+  --glass-bg: rgba(15, 23, 42, 0.7);
   --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-blur: 24px;
   
   --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.5);
   --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.7), 0 0 20px var(--accent-glow);
   
   --radius-md: 8px;
   --radius-lg: 16px;
+  --radius-xl: 24px;
   
   /* Flooring Brand Accents - Rich Earth Tones */
   --timber-warm: #d4a373;
@@ -63,6 +65,7 @@ h1, h2, h3, h4, h5, h6 {
   font-family: 'Outfit', sans-serif;
   color: var(--text-primary);
   margin-bottom: 0.5em;
+  letter-spacing: -0.025em;
 }
 
 a {
@@ -82,11 +85,42 @@ button {
 /* Glassmorphism panel utility */
 .glass-panel {
   background: var(--glass-bg);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
   border: 1px solid var(--glass-border);
   box-shadow: var(--shadow-sm);
   border-radius: var(--radius-lg);
+}
+
+/* Animations */
+@keyframes slideUp {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.stagger-item {
+  opacity: 0;
+  animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.25);
 }
 
 /* Print Styles - To strip the UI and only print the document */

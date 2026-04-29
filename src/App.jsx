@@ -10,6 +10,7 @@ import {
 import html2canvas from 'html2canvas';
 import FlyerPreview from './components/FlyerPreview';
 import SocialPreview from './components/SocialPreview';
+import BrochurePreview from './components/BrochurePreview';
 import './App.css';
 
 function App() {
@@ -22,7 +23,9 @@ function App() {
     warranty: '50-Year Residential Warranty',
     description: 'A beautiful, durable, and water-resistant flooring option perfect for active homes. Ideal for showcasing open floor plans.',
     partnerName: 'Fargo Flooring Professionals',
-    partnerContact: 'sales@fargoflooring.com | (555) 123-4567'
+    partnerContact: 'sales@fargoflooring.com | (555) 123-4567',
+    heroImage: '/interior.png',
+    swatchImage: '/swatch.png'
   });
 
   const previewRef = useRef(null);
@@ -33,6 +36,17 @@ function App() {
       ...prev,
       [name]: value
     }));
+  };
+
+  const handleImageUpload = (e) => {
+    const { name, files } = e.target;
+    if (files && files[0]) {
+      const url = URL.createObjectURL(files[0]);
+      setFormData(prev => ({
+        ...prev,
+        [name]: url
+      }));
+    }
   };
 
   const handlePrint = () => {
@@ -75,14 +89,15 @@ function App() {
   return (
     <div className="app-container">
       {/* Sidebar Navigation */}
-      <aside className="sidebar glass-panel">
+      <aside className="sidebar stagger-item" style={{ animationDelay: '0.05s' }}>
         <div className="brand-header">
           <Layout size={24} color="var(--accent-sapphire)" />
           <span>Fargo Generator</span>
         </div>
         
         <button 
-          className={`nav-item ${assetType === 'flyer' ? 'active' : ''}`}
+          className={`nav-item stagger-item ${assetType === 'flyer' ? 'active' : ''}`}
+          style={{ animationDelay: '0.1s' }}
           onClick={() => setAssetType('flyer')}
         >
           <FileBox size={18} />
@@ -90,7 +105,8 @@ function App() {
         </button>
         
         <button 
-          className={`nav-item ${assetType === 'social' ? 'active' : ''}`}
+          className={`nav-item stagger-item ${assetType === 'social' ? 'active' : ''}`}
+          style={{ animationDelay: '0.15s' }}
           onClick={() => setAssetType('social')}
         >
           <ImageIcon size={18} />
@@ -98,7 +114,8 @@ function App() {
         </button>
         
         <button 
-          className={`nav-item ${assetType === 'brochure' ? 'active' : ''}`}
+          className={`nav-item stagger-item ${assetType === 'brochure' ? 'active' : ''}`}
+          style={{ animationDelay: '0.2s' }}
           onClick={() => setAssetType('brochure')}
         >
           <BookOpen size={18} />
@@ -108,10 +125,10 @@ function App() {
 
       <main className="main-content">
         {/* Editor Form */}
-        <section className="editor-panel glass-panel">
+        <section className="editor-panel stagger-item" style={{ animationDelay: '0.1s' }}>
           <h3>Edit Details</h3>
           
-          <div className="form-group">
+          <div className="form-group stagger-item" style={{ animationDelay: '0.15s' }}>
             <label>Product Name</label>
             <input 
               type="text" 
@@ -122,7 +139,7 @@ function App() {
             />
           </div>
           
-          <div className="form-group">
+          <div className="form-group stagger-item" style={{ animationDelay: '0.2s' }}>
             <label>Price</label>
             <input 
               type="text" 
@@ -133,7 +150,7 @@ function App() {
             />
           </div>
 
-          <div className="form-group">
+          <div className="form-group stagger-item" style={{ animationDelay: '0.25s' }}>
             <label>Dimensions</label>
             <input 
               type="text" 
@@ -144,7 +161,7 @@ function App() {
             />
           </div>
           
-          <div className="form-group">
+          <div className="form-group stagger-item" style={{ animationDelay: '0.3s' }}>
             <label>Warranty</label>
             <input 
               type="text" 
@@ -155,7 +172,7 @@ function App() {
             />
           </div>
           
-          <div className="form-group">
+          <div className="form-group stagger-item" style={{ animationDelay: '0.35s' }}>
             <label>Description</label>
             <textarea 
               className="form-control" 
@@ -167,7 +184,31 @@ function App() {
           
           <hr style={{ borderColor: 'var(--border-color)', margin: '1rem 0' }} />
           
-          <div className="form-group">
+          <div className="form-group stagger-item" style={{ animationDelay: '0.4s' }}>
+            <label>Hero Image</label>
+            <input 
+              type="file" 
+              className="form-control" 
+              name="heroImage" 
+              accept="image/*"
+              onChange={handleImageUpload} 
+            />
+          </div>
+
+          <div className="form-group stagger-item" style={{ animationDelay: '0.45s' }}>
+            <label>Swatch Image</label>
+            <input 
+              type="file" 
+              className="form-control" 
+              name="swatchImage" 
+              accept="image/*"
+              onChange={handleImageUpload} 
+            />
+          </div>
+
+          <hr style={{ borderColor: 'var(--border-color)', margin: '1rem 0' }} />
+          
+          <div className="form-group stagger-item" style={{ animationDelay: '0.5s' }}>
             <label>Partner / Location Name</label>
             <input 
               type="text" 
@@ -178,7 +219,7 @@ function App() {
             />
           </div>
 
-          <div className="form-group">
+          <div className="form-group stagger-item" style={{ animationDelay: '0.55s' }}>
             <label>Contact Info</label>
             <input 
               type="text" 
@@ -193,8 +234,8 @@ function App() {
         {/* Live Preview */}
         <section className="preview-panel">
           {/* Action Bar for Exprots */}
-          <div className="action-bar glass-panel">
-            <button className="btn btn-outline" onClick={handlePrint} disabled={assetType !== 'flyer'}>
+          <div className="action-bar stagger-item" style={{ animationDelay: '0.25s' }}>
+            <button className="btn btn-outline" onClick={handlePrint} disabled={assetType === 'social'}>
               <Printer size={18} /> Print PDF
             </button>
             <button className="btn btn-primary" onClick={handleDownloadImage}>
@@ -205,12 +246,7 @@ function App() {
           <div className="preview-document" ref={previewRef}>
              {assetType === 'flyer' && <FlyerPreview formData={formData} />}
              {assetType === 'social' && <SocialPreview formData={formData} />}
-             {assetType === 'brochure' && (
-               <div style={{ color: 'white', padding: '4rem', textAlign: 'center', background: 'rgba(255,255,255,0.05)', borderRadius: '16px', border: '1px solid rgba(255,255,255,0.1)' }}>
-                 <h2>Tri-Fold Brochure Template</h2>
-                 <p>Coming Soon in Phase 2</p>
-               </div>
-             )}
+             {assetType === 'brochure' && <BrochurePreview formData={formData} />}
           </div>
         </section>
       </main>

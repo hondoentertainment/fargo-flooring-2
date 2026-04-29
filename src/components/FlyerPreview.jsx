@@ -12,9 +12,9 @@ const FlyerPreview = ({ formData }) => {
 
       {/* Main Image */}
       <div className="flyer-hero">
-        <img src="/interior.png" alt="Interior Showroom" className="hero-img" />
+        <img src={formData.heroImage || "/interior.png"} alt="Interior Showroom" className="hero-img" />
         <div className="flyer-swatch-insert">
-          <img src="/swatch.png" alt="Flooring Swatch" />
+          <img src={formData.swatchImage || "/swatch.png"} alt="Flooring Swatch" />
         </div>
       </div>
 

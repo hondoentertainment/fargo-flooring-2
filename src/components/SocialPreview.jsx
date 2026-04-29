@@ -5,12 +5,12 @@ const SocialPreview = ({ formData }) => {
   return (
     <div className="social-document" id="social-node">
       <div className="social-hero">
-        <img src="/interior.png" alt="Interior Showroom" className="social-img" />
+        <img src={formData.heroImage || "/interior.png"} alt="Interior Showroom" className="social-img" />
         <div className="social-gradient-overlay" />
       </div>
 
       <div className="social-floating-swatch">
-        <img src="/swatch.png" alt="Flooring Swatch" />
+        <img src={formData.swatchImage || "/swatch.png"} alt="Flooring Swatch" />
       </div>
 
       <div className="social-content">
