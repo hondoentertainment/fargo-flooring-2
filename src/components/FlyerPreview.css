@@ -13,8 +13,8 @@
 }
 
 .preview-panel .flyer-document {
-  transform: scale(0.6);
-  margin-bottom: -400px; /* Offset the scale height reduction manually for simple layout */
+  transform: scale(0.4);
+  margin-bottom: -634px; /* Offset the scale height reduction manually for simple layout */
 }
 
 .app-fullscreen .preview-panel .flyer-document {

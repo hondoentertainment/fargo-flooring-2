@@ -14,8 +14,8 @@
 
 /* Scaling logic for the preview panel */
 .preview-panel .social-document {
-  transform: scale(0.45);
-  margin-bottom: -600px; /* Offset the scale height reduction manually for simple layout */
+  transform: scale(0.35);
+  margin-bottom: -702px; /* Offset the scale height reduction manually for simple layout */
 }
 
 .app-fullscreen .preview-panel .social-document {

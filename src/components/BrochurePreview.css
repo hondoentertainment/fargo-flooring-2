@@ -12,9 +12,9 @@
 }
 
 .preview-panel .brochure-document {
-  transform: scale(0.55);
-  margin-bottom: -365px; /* Offset the scale height reduction manually for simple layout */
-  margin-right: -475px; /* Offset width */
+  transform: scale(0.4);
+  margin-bottom: -490px; /* Offset the scale height reduction manually for simple layout */
+  margin-right: -634px; /* Offset width */
 }
 
 .app-fullscreen .preview-panel .brochure-document {
