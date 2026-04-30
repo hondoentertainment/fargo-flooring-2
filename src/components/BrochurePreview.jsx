@@ -39,9 +39,13 @@ const BrochurePreview = ({ formData }) => {
         <div className="brochure-footer-spacer" />
 
         <div className="brochure-partner">
-          <div className="certified-badge">
-            Certified Installer
-          </div>
+          {formData.partnerLogo ? (
+            <img src={formData.partnerLogo} alt="Partner Logo" className="partner-logo" style={{ maxHeight: '100px', maxWidth: '180px', objectFit: 'contain' }} />
+          ) : (
+            <div className="certified-badge">
+              Certified Installer
+            </div>
+          )}
           <div className="partner-details">
             <h2>{formData.partnerName}</h2>
             <p>{formData.partnerContact}</p>

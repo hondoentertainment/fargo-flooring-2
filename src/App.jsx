@@ -38,7 +38,8 @@ const DEFAULT_DATA = {
   partnerName: 'Fargo Flooring Professionals',
   partnerContact: 'sales@fargoflooring.com | (555) 123-4567',
   heroImage: '/interior.png',
-  swatchImage: '/swatch.png'
+  swatchImage: '/swatch.png',
+  partnerLogo: null
 };
 
 function App() {
@@ -56,7 +57,8 @@ function App() {
         return {
           ...parsed,
           heroImage: '/interior.png',
-          swatchImage: '/swatch.png'
+          swatchImage: '/swatch.png',
+          partnerLogo: null
         };
       } catch (e) {
         console.error("Parse error", e);
@@ -66,7 +68,7 @@ function App() {
   });
 
   useEffect(() => {
-    const { heroImage, swatchImage, ...textData } = formData;
+    const { heroImage, swatchImage, partnerLogo, ...textData } = formData;
     localStorage.setItem('fargo-form', JSON.stringify(textData));
   }, [formData]);
 
@@ -355,6 +357,17 @@ function App() {
               onChange={handleInputChange} 
             />
             <span className="char-count">{formData.partnerContact.length} / {LIMITS.partnerContact}</span>
+          </div>
+
+          <div className="form-group stagger-item" style={{ animationDelay: '0.6s' }}>
+            <label>Custom Brand Logo</label>
+            <input 
+              type="file" 
+              className="form-control" 
+              name="partnerLogo" 
+              accept="image/*"
+              onChange={handleImageUpload} 
+            />
           </div>
         </section>
         )}
