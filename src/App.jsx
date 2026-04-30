@@ -10,8 +10,11 @@ import {
   Minimize2,
   Archive,
   RefreshCw,
-  X
+  X,
+  Wand2,
+  Loader2
 } from 'lucide-react';
+import { generateFieldContent } from './services/ai';
 import html2canvas from 'html2canvas';
 import JSZip from 'jszip';
 import FlyerPreview from './components/FlyerPreview';
@@ -48,6 +51,7 @@ function App() {
   const [isExporting, setIsExporting] = useState(false);
   const [showReviewModal, setShowReviewModal] = useState(false);
   const [toastMessage, setToastMessage] = useState(null);
+  const [isGenerating, setIsGenerating] = useState({});
   
   const [formData, setFormData] = useState(() => {
     const saved = localStorage.getItem('fargo-form');
@@ -68,7 +72,7 @@ function App() {
   });
 
   useEffect(() => {
-    const { heroImage, swatchImage, partnerLogo, ...textData } = formData;
+    const { heroImage: _hero, swatchImage: _swatch, partnerLogo: _logo, ...textData } = formData;
     localStorage.setItem('fargo-form', JSON.stringify(textData));
   }, [formData]);
 
@@ -106,6 +110,28 @@ function App() {
     if (window.confirm("Are you sure you want to reset all form fields? This cannot be undone.")) {
       setFormData(DEFAULT_DATA);
       localStorage.removeItem('fargo-form');
+    }
+  };
+
+  const handleGenerateAI = async (fieldName) => {
+    setIsGenerating(prev => ({ ...prev, [fieldName]: true }));
+    try {
+      const generatedText = await generateFieldContent(fieldName, formData);
+      setFormData(prev => ({
+        ...prev,
+        [fieldName]: generatedText
+      }));
+      setToastMessage(`Generated new ${fieldName}!`);
+      setTimeout(() => setToastMessage(null), 3000);
+    } catch (err) {
+      console.error(err);
+      if (err.message.includes('API key')) {
+         alert(err.message);
+      } else {
+         alert(`Failed to generate content for ${fieldName}.`);
+      }
+    } finally {
+      setIsGenerating(prev => ({ ...prev, [fieldName]: false }));
     }
   };
 
@@ -244,7 +270,17 @@ function App() {
           <h3>Edit Details</h3>
           
           <div className="form-group stagger-item" style={{ animationDelay: '0.15s' }}>
-            <label>Product Name</label>
+            <div className="label-row">
+              <label>Product Name</label>
+              <button 
+                className="ai-wand-btn" 
+                onClick={() => handleGenerateAI('productName')}
+                disabled={isGenerating.productName}
+                title="Generate with AI"
+              >
+                {isGenerating.productName ? <Loader2 size={14} className="spin" /> : <Wand2 size={14} />}
+              </button>
+            </div>
             <input 
               type="text" 
               className="form-control" 
@@ -257,7 +293,17 @@ function App() {
           </div>
           
           <div className="form-group stagger-item" style={{ animationDelay: '0.2s' }}>
-            <label>Price</label>
+            <div className="label-row">
+              <label>Price</label>
+              <button 
+                className="ai-wand-btn" 
+                onClick={() => handleGenerateAI('price')}
+                disabled={isGenerating.price}
+                title="Generate with AI"
+              >
+                {isGenerating.price ? <Loader2 size={14} className="spin" /> : <Wand2 size={14} />}
+              </button>
+            </div>
             <input 
               type="text" 
               className="form-control" 
@@ -270,7 +316,17 @@ function App() {
           </div>
 
           <div className="form-group stagger-item" style={{ animationDelay: '0.25s' }}>
-            <label>Dimensions</label>
+            <div className="label-row">
+              <label>Dimensions</label>
+              <button 
+                className="ai-wand-btn" 
+                onClick={() => handleGenerateAI('dimensions')}
+                disabled={isGenerating.dimensions}
+                title="Generate with AI"
+              >
+                {isGenerating.dimensions ? <Loader2 size={14} className="spin" /> : <Wand2 size={14} />}
+              </button>
+            </div>
             <input 
               type="text" 
               className="form-control" 
@@ -283,7 +339,17 @@ function App() {
           </div>
           
           <div className="form-group stagger-item" style={{ animationDelay: '0.3s' }}>
-            <label>Warranty</label>
+            <div className="label-row">
+              <label>Warranty</label>
+              <button 
+                className="ai-wand-btn" 
+                onClick={() => handleGenerateAI('warranty')}
+                disabled={isGenerating.warranty}
+                title="Generate with AI"
+              >
+                {isGenerating.warranty ? <Loader2 size={14} className="spin" /> : <Wand2 size={14} />}
+              </button>
+            </div>
             <input 
               type="text" 
               className="form-control" 
@@ -296,7 +362,17 @@ function App() {
           </div>
           
           <div className="form-group stagger-item" style={{ animationDelay: '0.35s' }}>
-            <label>Description</label>
+            <div className="label-row">
+              <label>Description</label>
+              <button 
+                className="ai-wand-btn" 
+                onClick={() => handleGenerateAI('description')}
+                disabled={isGenerating.description}
+                title="Generate with AI"
+              >
+                {isGenerating.description ? <Loader2 size={14} className="spin" /> : <Wand2 size={14} />}
+              </button>
+            </div>
             <textarea 
               className="form-control" 
               name="description" 
@@ -334,7 +410,17 @@ function App() {
           <hr style={{ borderColor: 'var(--border-color)', margin: '1rem 0' }} />
           
           <div className="form-group stagger-item" style={{ animationDelay: '0.5s' }}>
-            <label>Partner / Location Name</label>
+            <div className="label-row">
+              <label>Partner / Location Name</label>
+              <button 
+                className="ai-wand-btn" 
+                onClick={() => handleGenerateAI('partnerName')}
+                disabled={isGenerating.partnerName}
+                title="Generate with AI"
+              >
+                {isGenerating.partnerName ? <Loader2 size={14} className="spin" /> : <Wand2 size={14} />}
+              </button>
+            </div>
             <input 
               type="text" 
               className="form-control" 
@@ -347,7 +433,17 @@ function App() {
           </div>
 
           <div className="form-group stagger-item" style={{ animationDelay: '0.55s' }}>
-            <label>Contact Info</label>
+            <div className="label-row">
+              <label>Contact Info</label>
+              <button 
+                className="ai-wand-btn" 
+                onClick={() => handleGenerateAI('partnerContact')}
+                disabled={isGenerating.partnerContact}
+                title="Generate with AI"
+              >
+                {isGenerating.partnerContact ? <Loader2 size={14} className="spin" /> : <Wand2 size={14} />}
+              </button>
+            </div>
             <input 
               type="text" 
               className="form-control" 
