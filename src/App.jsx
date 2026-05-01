@@ -15,8 +15,6 @@ import {
   Loader2
 } from 'lucide-react';
 import { generateFieldContent } from './services/ai';
-import html2canvas from 'html2canvas';
-import JSZip from 'jszip';
 import FlyerPreview from './components/FlyerPreview';
 import SocialPreview from './components/SocialPreview';
 import BrochurePreview from './components/BrochurePreview';
@@ -140,6 +138,7 @@ function App() {
     const originalTransform = node.style.transform;
     node.style.transform = 'none';
     
+    const html2canvas = (await import('html2canvas')).default;
     const canvas = await html2canvas(node, {
       scale: 2,
       useCORS: true,
@@ -181,6 +180,7 @@ function App() {
   const confirmBatchDownload = async () => {
     try {
       setIsExporting(true);
+      const JSZip = (await import('jszip')).default;
       const zip = new JSZip();
       
       const flyerCanvas = await captureNode(flyerRef.current.firstElementChild, 'flyer');
