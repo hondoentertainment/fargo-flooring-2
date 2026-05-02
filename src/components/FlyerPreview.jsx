@@ -39,7 +39,7 @@ const FlyerPreview = ({ formData }) => {
       {/* Footer / Partner Ribbon */}
       <div className="flyer-footer">
         {formData.partnerLogo ? (
-          <img src={formData.partnerLogo} alt="Partner Logo" className="partner-logo" style={{ maxHeight: '80px', maxWidth: '150px', objectFit: 'contain' }} />
+          <img src={formData.partnerLogo} alt={`${formData.partnerName || 'Partner'} Logo`} className="partner-logo" style={{ maxHeight: '80px', maxWidth: '150px', objectFit: 'contain' }} />
         ) : (
           <div className="certified-badge">
             Certified Installer

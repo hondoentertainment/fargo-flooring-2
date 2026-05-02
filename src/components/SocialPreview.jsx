@@ -22,7 +22,7 @@ const SocialPreview = ({ formData }) => {
         <div className="social-footer">
           <div className="social-partner">
             {formData.partnerLogo && (
-              <img src={formData.partnerLogo} alt="Partner Logo" className="partner-logo" style={{ maxHeight: '60px', maxWidth: '120px', objectFit: 'contain', marginBottom: '10px' }} />
+              <img src={formData.partnerLogo} alt={`${formData.partnerName || 'Partner'} Logo`} className="partner-logo" style={{ maxHeight: '60px', maxWidth: '120px', objectFit: 'contain', marginBottom: '10px' }} />
             )}
             <span className="partner-name">{formData.partnerName}</span>
             <span className="partner-contact">{formData.partnerContact}</span>

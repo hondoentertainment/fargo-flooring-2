@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { 
   Layers, 
   ArrowRight, 
@@ -15,6 +16,10 @@ function LandingPage() {
 
   return (
     <div className="landing-page">
+      <Helmet>
+        <title>Fargo Flooring Professionals | Expert Hardwood & Tile Installation</title>
+        <meta name="description" content="Premium flooring installations with a 50-year warranty. Get a free estimate for hardwood, laminate, and tile." />
+      </Helmet>
       {/* Navigation */}
       <nav className="landing-nav">
         <div className="nav-container">
@@ -76,9 +81,9 @@ function LandingPage() {
             
             <div className="hero-social-proof">
               <div className="avatars">
-                <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-1.jpg" alt="Customer" />
-                <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-2.jpg" alt="Customer" />
-                <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-3.jpg" alt="Customer" />
+                <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-1.jpg" alt="" />
+                <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-2.jpg" alt="" />
+                <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-3.jpg" alt="" />
               </div>
               <div>
                 <div className="stars">
