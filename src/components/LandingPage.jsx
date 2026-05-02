@@ -216,6 +216,48 @@ function LandingPage() {
         </div>
       </section>
 
+      {/* Portfolio Section */}
+      <section id="portfolio" className="portfolio-section">
+        <div className="section-container">
+          <div className="section-header">
+            <h2 className="font-heading">Marketing Portfolio</h2>
+            <p>See the high-fidelity marketing assets our generator creates for flooring professionals.</p>
+          </div>
+          
+          <div className="portfolio-grid">
+            <div className="portfolio-item">
+              <div className="portfolio-img-wrapper">
+                <img src="/portfolio_flyer.png" alt="Marketing Flyer Example" />
+                <div className="portfolio-overlay">
+                  <span>View Flyer</span>
+                </div>
+              </div>
+              <h3 className="font-heading">Print Flyers</h3>
+            </div>
+
+            <div className="portfolio-item">
+              <div className="portfolio-img-wrapper">
+                <img src="/portfolio_social.png" alt="Social Media Post Example" />
+                <div className="portfolio-overlay">
+                  <span>View Social Post</span>
+                </div>
+              </div>
+              <h3 className="font-heading">Social Media</h3>
+            </div>
+
+            <div className="portfolio-item">
+              <div className="portfolio-img-wrapper">
+                <img src="/portfolio_brochure.png" alt="Tri-fold Brochure Example" />
+                <div className="portfolio-overlay">
+                  <span>View Brochure</span>
+                </div>
+              </div>
+              <h3 className="font-heading">Tri-Fold Brochures</h3>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Contact Section */}
       <section id="contact" className="contact-section">
         <div className="contact-container">
