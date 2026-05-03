@@ -6,6 +6,7 @@ import { AuthProvider } from './contexts/AuthContext.jsx'
 import './index.css'
 import App from './App.jsx'
 import LandingPage from './components/LandingPage.jsx'
+import Dashboard from './components/Dashboard.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -15,6 +16,7 @@ createRoot(document.getElementById('root')).render(
           <Routes>
             <Route path="/" element={<LandingPage />} />
             <Route path="/generator" element={<App />} />
+            <Route path="/dashboard" element={<Dashboard />} />
           </Routes>
         </BrowserRouter>
       </AuthProvider>

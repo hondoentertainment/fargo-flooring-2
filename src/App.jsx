@@ -12,8 +12,12 @@ import {
   RefreshCw,
   X,
   Wand2,
-  Loader2
+  Loader2,
+  Save
 } from 'lucide-react';
+import { supabase } from './lib/supabase';
+import { useAuth } from './contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
 import { generateFieldContent } from './services/ai';
 import FlyerPreview from './components/FlyerPreview';
 import SocialPreview from './components/SocialPreview';
@@ -45,9 +49,12 @@ const DEFAULT_DATA = {
 };
 
 function App() {
+  const { user } = useAuth();
+  const navigate = useNavigate();
   const [assetType, setAssetType] = useState('flyer'); 
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [isExporting, setIsExporting] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
   const [showReviewModal, setShowReviewModal] = useState(false);
   const [toastMessage, setToastMessage] = useState(null);
   const [isGenerating, setIsGenerating] = useState({});
@@ -110,6 +117,33 @@ function App() {
     if (window.confirm("Are you sure you want to reset all form fields? This cannot be undone.")) {
       setFormData(DEFAULT_DATA);
       localStorage.removeItem('fargo-form');
+    }
+  };
+
+  const handleSaveToPortfolio = async () => {
+    if (!user) {
+      alert("You must be logged in to save campaigns to your portfolio.");
+      return;
+    }
+
+    setIsSaving(true);
+    try {
+      const { error } = await supabase
+        .from('saved_assets')
+        .insert({
+          user_id: user.id,
+          asset_type: assetType,
+          form_data: formData
+        });
+
+      if (error) throw error;
+      setToastMessage("Saved to Portfolio successfully!");
+      setTimeout(() => setToastMessage(null), 3000);
+    } catch (err) {
+      console.error("Failed to save asset:", err);
+      alert("Failed to save campaign. Please try again.");
+    } finally {
+      setIsSaving(false);
     }
   };
 
@@ -492,6 +526,9 @@ function App() {
             </button>
             <button className="btn btn-outline" onClick={handleDownloadImage} disabled={isExporting}>
               <Download size={18} /> Download Image
+            </button>
+            <button className="btn btn-outline" onClick={handleSaveToPortfolio} disabled={isSaving || isExporting}>
+              {isSaving ? <Loader2 size={18} className="spin" /> : <Save size={18} />} Save
             </button>
             <button className="btn btn-primary" onClick={handleBatchDownload} disabled={isExporting}>
               <Archive size={18} /> {isExporting ? 'Exporting...' : 'Export All (ZIP)'}
