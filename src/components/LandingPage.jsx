@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { 
@@ -9,10 +9,14 @@ import {
   TreePine,
   LayoutGrid
 } from 'lucide-react';
+import { useAuth } from '../contexts/AuthContext';
+import AuthModal from './AuthModal';
 import './LandingPage.css';
 
 function LandingPage() {
   const navigate = useNavigate();
+  const { user, signOut } = useAuth();
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
 
   return (
     <div className="landing-page">
@@ -20,6 +24,9 @@ function LandingPage() {
         <title>Fargo Flooring Professionals | Expert Hardwood & Tile Installation</title>
         <meta name="description" content="Premium flooring installations with a 50-year warranty. Get a free estimate for hardwood, laminate, and tile." />
       </Helmet>
+      
+      <AuthModal isOpen={isAuthModalOpen} onClose={() => setIsAuthModalOpen(false)} />
+
       {/* Navigation */}
       <nav className="landing-nav">
         <div className="nav-container">
@@ -34,6 +41,11 @@ function LandingPage() {
             <a href="#services" className="nav-link">Services</a>
             <a href="#process" className="nav-link">Our Process</a>
             <a href="#portfolio" className="nav-link">Portfolio</a>
+            {user ? (
+              <button className="nav-link" onClick={signOut}>Log Out</button>
+            ) : (
+              <button className="nav-link" onClick={() => setIsAuthModalOpen(true)}>Log In</button>
+            )}
           </div>
 
           <a href="#contact" className="hero-btn-primary btn-nav" style={{ padding: '0.6rem 1.25rem' }}>

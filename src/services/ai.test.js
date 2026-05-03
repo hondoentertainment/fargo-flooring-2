@@ -1,40 +1,36 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { generateFieldContent } from './ai';
 
-let mockText = 'Mocked text';
-
-vi.mock('@google/generative-ai', () => {
-  return {
-    GoogleGenerativeAI: class {
-      getGenerativeModel() {
-        return {
-          generateContent: async () => ({
-            response: {
-              text: () => mockText
-            }
-          })
-        };
-      }
-    }
-  };
-});
-
-describe('AI Service limits', () => {
+describe('AI Service fetch wrapper', () => {
   beforeEach(() => {
-    mockText = 'Mocked text';
     vi.clearAllMocks();
+    global.fetch = vi.fn();
   });
 
-  it('generates content successfully', async () => {
+  it('calls the backend API and returns text', async () => {
+    global.fetch.mockResolvedValueOnce({
+      ok: true,
+      json: async () => ({ text: 'Mocked server text' }),
+    });
+
     const result = await generateFieldContent('productName', { style: 'Modern' });
-    expect(result).toBe('Mocked text');
+    expect(result).toBe('Mocked server text');
+    expect(global.fetch).toHaveBeenCalledWith('/api/generate', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ fieldName: 'productName', currentFormData: { style: 'Modern' } }),
+    });
   });
 
-  it('enforces character limits', async () => {
-    mockText = 'This is a very long string that will definitely exceed the twenty character limit of the price field.';
+  it('throws an error on server failure', async () => {
+    global.fetch.mockResolvedValueOnce({
+      ok: false,
+      status: 500,
+      json: async () => ({ error: 'Internal Server Error' }),
+    });
 
-    const result = await generateFieldContent('price', {});
-    expect(result.length).toBeLessThanOrEqual(20);
-    expect(result).toBe('This is a very long');
+    await expect(generateFieldContent('productName', {})).rejects.toThrow('Internal Server Error');
   });
 });

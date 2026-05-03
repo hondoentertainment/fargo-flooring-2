@@ -18,6 +18,7 @@ import { generateFieldContent } from './services/ai';
 import FlyerPreview from './components/FlyerPreview';
 import SocialPreview from './components/SocialPreview';
 import BrochurePreview from './components/BrochurePreview';
+import PricingModal from './components/PricingModal';
 import './App.css';
 
 const LIMITS = {
@@ -50,6 +51,7 @@ function App() {
   const [showReviewModal, setShowReviewModal] = useState(false);
   const [toastMessage, setToastMessage] = useState(null);
   const [isGenerating, setIsGenerating] = useState({});
+  const [showPricingModal, setShowPricingModal] = useState(false);
   
   const [formData, setFormData] = useState(() => {
     const saved = localStorage.getItem('fargo-form');
@@ -251,6 +253,15 @@ function App() {
         </button>
 
         <div style={{ flex: 1 }}></div>
+
+        <button 
+          className="nav-item stagger-item"
+          style={{ animationDelay: '0.22s', color: 'var(--accent-sapphire)', fontWeight: 'bold' }}
+          onClick={() => setShowPricingModal(true)}
+        >
+          <Printer size={18} />
+          Upgrade to Pro
+        </button>
 
         <button 
           className="nav-item stagger-item"
@@ -562,6 +573,8 @@ function App() {
           {toastMessage}
         </div>
       )}
+
+      <PricingModal isOpen={showPricingModal} onClose={() => setShowPricingModal(false)} />
     </div>
   );
 }
