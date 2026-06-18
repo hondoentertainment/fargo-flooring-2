@@ -4,18 +4,18 @@ import { generateFieldContent } from './ai';
 describe('AI Service fetch wrapper', () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    global.fetch = vi.fn();
+    globalThis.fetch = vi.fn();
   });
 
   it('calls the backend API and returns text', async () => {
-    global.fetch.mockResolvedValueOnce({
+    globalThis.fetch.mockResolvedValueOnce({
       ok: true,
       json: async () => ({ text: 'Mocked server text' }),
     });
 
     const result = await generateFieldContent('productName', { style: 'Modern' });
     expect(result).toBe('Mocked server text');
-    expect(global.fetch).toHaveBeenCalledWith('/api/generate', {
+    expect(globalThis.fetch).toHaveBeenCalledWith('/api/generate', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -25,7 +25,7 @@ describe('AI Service fetch wrapper', () => {
   });
 
   it('throws an error on server failure', async () => {
-    global.fetch.mockResolvedValueOnce({
+    globalThis.fetch.mockResolvedValueOnce({
       ok: false,
       status: 500,
       json: async () => ({ error: 'Internal Server Error' }),
