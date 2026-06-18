@@ -17,7 +17,6 @@ import {
 } from 'lucide-react';
 import { supabase } from './lib/supabase';
 import { useAuth } from './contexts/AuthContext';
-import { useNavigate } from 'react-router-dom';
 import { generateFieldContent } from './services/ai';
 import FlyerPreview from './components/FlyerPreview';
 import SocialPreview from './components/SocialPreview';
@@ -50,7 +49,6 @@ const DEFAULT_DATA = {
 
 function App() {
   const { user } = useAuth();
-  const navigate = useNavigate();
   const [assetType, setAssetType] = useState('flyer'); 
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [isExporting, setIsExporting] = useState(false);
